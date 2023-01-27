@@ -1,67 +1,65 @@
+import { BannerAdSchema } from "./cms-components/banner-ad";
+import { StoreLocationSchema, StoreAddressSchema, OpeningHours } from "./locations/store";
+
+
 export const schemaTypes = [
+  BannerAdSchema,
+  StoreAddressSchema,
+  OpeningHours,
+  StoreLocationSchema,
   {
-    title: "Ad - Banner Ad",
-    name: "landingPageBannerAd",
+    title: "Help Page",
+    name: "helpPage",
     type: "document",
     groups: [
-      { name: "banner", title: "Banner" },
-      { name: "cta", title: "Call to Action" },
-      { name: "meta", title: "Metadata"},
+      { name: "body", title: "Body" },
+      { name: "media", title: "Media" },
+      { name: "meta", title: "Metadata" },
     ],
     fields: [
       {
         title: "Name",
         name: "name",
         type: "string",
-        description: "The name of the banner, used only in the management UI.",
+        description: "The name of the page, used only in the management UI.",
+        group: "meta"
+      },
+      {
+        title: "Slug",
+        name: "slug",
+        type: "slug",
+        description: "Used to retrieve the page based on the URL slug.",
+        options: {
+          source: "name",
+        },
         group: "meta"
       },
       {
         title: "Image",
         name: "image",
         type: "image",
-        description: "The image to be used in the banner",
-        group: "banner"
+        description: "You can include an image to support the article.",
+        group: "media"
       },
       {
-        title: "Leading Line",
-        name: "leadingLine",
+        title: "Heading",
+        name: "heading",
         type: "string",
-        description: "Can be used as the main headline in the banner.",
-        grouop: "banner"
+        description: "The page title.",
+        group: "body"
       },
       {
-        title: "Intro Text",
-        name: "introText",
-        type: "string",
-        description: "Can be used as the main headline in the banner.",
-        group: "banner"
-      },
-      {
-        title: "Link",
-        name: "link",
-        type: "url",
-        validation: Rule => Rule.uri({
-          scheme: ['http', 'https'],
-          allowRelative: true
-        }),
-        group: "cta",
-      },
-      {
-        title: "Link Type",
-        name: "linkType",
-        type: "string",
-        options: {
-          list: ["internal", "external"],
-        },
-        group: "cta",
-      },
-      {
-        title: "Link Text",
-        name: "linkText",
-        type: "string",
-        initialValue: "Shop Now",
-        group: "cta",
+        name: 'bodyText',
+        type: 'array',
+        title: 'Body Text',
+        of: [
+          {
+            type: 'block'
+          },
+          {
+            type: 'image'
+          }
+        ]
       }
     ]
   }
